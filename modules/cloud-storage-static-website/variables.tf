@@ -16,7 +16,7 @@ variable "website_domain_name" {
 # These variables have defaults, but may be overridden by the operator.
 # ---------------------------------------------------------------------------------------------------------------------
 variable "website_location" {
-  description = "Location of the bucket that will store the static website, see https://cloud.google.com/storage/docs/bucket-locations"
+  description = "Location of the bucket that will store the static website. Once a bucket has been created, its location can't be changed. See https://cloud.google.com/storage/docs/bucket-locations"
   default     = "US"
 }
 
@@ -25,11 +25,15 @@ variable "website_storage_class" {
   default     = "MULTI_REGIONAL"
 }
 
-# Storage bucket default object ACLs variables
-variable "website_acls" {
-  description = "Bucket default object ACLs to allow all users access to objects"
+variable "website_acl" {
+  description = "The canned GCS ACL to apply. Must be set if var.role_entities is not. See https://cloud.google.com/storage/docs/access-control/lists#predefined-acl"
+  default     = "publicRead"
+}
+
+variable "role_entities" {
+  description = "Bucket default object ACLs to allow users access to objects, for example 'READER:allUsers'"
   type        = "list"
-  default     = ["READER:allUsers"]
+  default     = []
 }
 
 variable "enable_versioning" {
@@ -105,7 +109,7 @@ variable "create_dns_entry" {
   default     = false
 }
 
-variable "dns_managed_zone" {
+variable "dns_managed_zone_id" {
   description = "The ID of the Cloud DNS Managed Zone in which to create the DNS A Record specified in var.website_domain_name. Only used if var.create_dns_entry is true."
   default     = "replace-me"
 }
