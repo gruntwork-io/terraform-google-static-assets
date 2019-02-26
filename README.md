@@ -13,7 +13,7 @@ This repo contains modules for managing static assets (CSS, JS, images) in GCP.
 
 This Module and its Submodules are maintained by [Gruntwork](http://www.gruntwork.io/). Read the [Gruntwork Philosophy](/GRUNTWORK_PHILOSOPHY.md) document to learn more about how Gruntwork builds production grade infrastructure code. If you are looking for help or
 commercial support, send an email to
-[support@gruntwork.io](mailto:support@gruntwork.io?Subject=Google%20SQL%20Module).
+[support@gruntwork.io](mailto:support@gruntwork.io?Subject=Google%20Static%20Assets%20Module).
 
 Gruntwork can help with:
 
