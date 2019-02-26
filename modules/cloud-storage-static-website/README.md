@@ -9,8 +9,7 @@ Some benefits of hosting your static assets, like images or JavaScript files, in
 * Bandwidth charges for accessing content typically cost less with Cloud Storage.
 * The load on your web servers is lessened when serving the static content from Cloud Storage.
 
-Hosting a static website with Google Cloud Storage does not support private access
-or guard your content with a login page - anyone with whom you share the URL can access the content.
+
 
 ## Quick Start
 
@@ -19,9 +18,17 @@ or guard your content with a login page - anyone with whom you share the URL can
 
 
 
+## How do I control access to my website?
+
+By default, the module uses a `publicRead` [Predefined ACL](https://cloud.google.com/storage/docs/access-control/lists#predefined-acl) that makes your website publicly accessible. You can change the predefined ACL using the `website_predefined_acl` input variable. For more fine-grained access control, you can set [ACLs](https://cloud.google.com/storage/docs/access-control/lists) using the `website_acls`  variable, for example ["READER:your-work-group@googlegroups.com"]  
+
+You can read more about access control here: https://cloud.google.com/storage/docs/access-control/
+
+
+
 ## How do I test my website?
 
-This module outputs the domain name of your website using the `website_domain_name` output variable.
+This module outputs the domain name of your website using the `website_url` output variable.
 
 By default, the URL for your assets name will be of the form:
 

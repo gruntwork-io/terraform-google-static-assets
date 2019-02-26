@@ -25,13 +25,13 @@ variable "website_storage_class" {
   default     = "MULTI_REGIONAL"
 }
 
-variable "website_acl" {
+variable "website_predefined_acl" {
   description = "The canned GCS ACL to apply. Must be set if var.role_entities is not. See https://cloud.google.com/storage/docs/access-control/lists#predefined-acl"
   default     = "publicRead"
 }
 
-variable "role_entities" {
-  description = "Bucket default object ACLs to allow users access to objects, for example 'READER:allUsers'"
+variable "website_acls" {
+  description = "Bucket default object ACLs to allow users access to objects, for example 'READER:allUsers'. See https://cloud.google.com/storage/docs/access-control/lists"
   type        = "list"
   default     = []
 }
