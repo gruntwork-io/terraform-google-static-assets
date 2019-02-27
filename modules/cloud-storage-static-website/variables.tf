@@ -33,7 +33,7 @@ variable "website_predefined_acl" {
 variable "website_acls" {
   description = "Bucket default object ACLs to allow users access to objects, for example 'READER:allUsers'. See https://cloud.google.com/storage/docs/access-control/lists"
   type        = "list"
-  default     = []
+  default     = ["READER:allUsers"]
 }
 
 variable "enable_versioning" {
@@ -49,6 +49,11 @@ variable "index_page" {
 variable "not_found_page" {
   description = "The custom object to return when a requested resource is not found"
   default     = "404.html"
+}
+
+variable "enable_cors" {
+  description = "Set to true if you want to enable CORS headers"
+  default     = false
 }
 
 variable "cors_origins" {
@@ -71,7 +76,7 @@ variable "cors_extra_headers" {
 
 variable "cors_max_age_seconds" {
   description = "The value, in seconds, to return in the Access-Control-Max-Age header used in preflight responses"
-  default     = ""
+  default     = "600"
 }
 
 variable "force_destroy_website" {
@@ -109,7 +114,13 @@ variable "create_dns_entry" {
   default     = false
 }
 
-variable "dns_managed_zone_id" {
-  description = "The ID of the Cloud DNS Managed Zone in which to create the DNS A Record specified in var.website_domain_name. Only used if var.create_dns_entry is true."
+variable "dns_managed_zone_name" {
+  description = "The name of the Cloud DNS Managed Zone in which to create the DNS A Record specified in var.website_domain_name. Only used if var.create_dns_entry is true."
   default     = "replace-me"
+}
+
+variable "custom_labels" {
+  description = "A map of custom labels to apply to the resources. The key is the label name and the value is the label value."
+  type        = "map"
+  default     = {}
 }
