@@ -24,6 +24,9 @@ locals {
       max_age_seconds = "${var.cors_max_age_seconds}"
     }
 
+    # We have to set at least one CORS property in the "empty" block
+    # To avoid terraform failures. This does not have effect on the
+    # CORS headers.
     "EMPTY" = {
       origin = [""]
     }
@@ -32,6 +35,8 @@ locals {
   # Construct the sub-block dynamically
   cors_configuration = "${local.cors_configuration_def[local.cors_configuration_key]}"
 
+  # We have to use dashes instead of dots in the access log bucket, because
+  # that bucket is not a website
   website_domain_name_dashed = "${replace(var.website_domain_name, ".", "-")}"
 }
 
@@ -61,6 +66,8 @@ resource "google_storage_bucket" "website" {
 
   force_destroy = "${var.force_destroy_website}"
 
+  # We disable custom KMS keys until we have a fix for
+  # https://github.com/terraform-providers/terraform-provider-google/issues/3134
   #encryption {
   #  default_kms_key_name = "${var.website_kms_key_name}"
   #}
@@ -74,9 +81,6 @@ resource "google_storage_bucket" "website" {
 
 # ------------------------------------------------------------------------------
 # CONFIGURE BUCKET ACLs
-#
-# We will create the ACL either with a predefined ACL or, if provided, list of
-# more granular access rights
 # ------------------------------------------------------------------------------
 
 resource "google_storage_default_object_acl" "website_acl" {
@@ -94,12 +98,15 @@ resource "google_storage_bucket" "access_logs" {
 
   project = "${var.project}"
 
+  # Use the dashed domain name
   name          = "${local.website_domain_name_dashed}-logs"
   location      = "${var.website_location}"
   storage_class = "${var.website_storage_class}"
 
   force_destroy = "${var.force_destroy_access_logs_bucket}"
 
+  # We disable custom KMS keys until we have a fix for
+  # https://github.com/terraform-providers/terraform-provider-google/issues/3134
   #encryption {
   #  default_kms_key_name = "${var.access_logs_kms_key_name}"
   #}
@@ -123,18 +130,27 @@ resource "google_storage_bucket" "access_logs" {
 resource "google_storage_bucket_acl" "analytics_write" {
   provider = "google-beta"
 
-  bucket      = "${google_storage_bucket.access_logs.name}"
+  bucket = "${google_storage_bucket.access_logs.name}"
+
+  # The actual identity is 'cloud-storage-analytics@google.com', but
+  # we're required to prefix that with the type of identity
   role_entity = ["WRITER:group-cloud-storage-analytics@google.com"]
 }
 
+# ---------------------------------------------------------------------------------------------------------------------
+# CREATE CNAME ENTRY IN DNS
+# ---------------------------------------------------------------------------------------------------------------------
+
 resource "google_dns_record_set" "cname" {
-  count = "${var.create_dns_entry}"
+  count = "${var.create_dns_entry == "true" ? 1 : 0}"
+
+  depends_on = ["google_storage_bucket.website"]
 
   project = "${var.project}"
 
   name         = "${var.website_domain_name}."
   managed_zone = "${var.dns_managed_zone_name}"
   type         = "CNAME"
-  ttl          = 300
+  ttl          = "${var.dns_record_ttl}"
   rrdatas      = ["c.storage.googleapis.com."]
 }
