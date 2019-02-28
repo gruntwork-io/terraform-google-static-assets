@@ -23,6 +23,8 @@ const KEY_DOMAIN_NAME = "domain-name"
 const EXAMPLE_NAME_STATIC_SITE = "cloud-storage-static-website"
 
 func TestCloudStorageStaticSite(t *testing.T) {
+	t.SkipNow()
+
 	t.Parallel()
 
 	//os.Setenv("SKIP_bootstrap", "true")
