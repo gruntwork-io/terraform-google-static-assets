@@ -80,7 +80,7 @@ resource "google_storage_bucket" "website" {
 }
 
 # ------------------------------------------------------------------------------
-# CONFIGURE BUCKET ACLs
+# CONFIGURE BUCKET ACLS
 # ------------------------------------------------------------------------------
 
 resource "google_storage_default_object_acl" "website_acl" {

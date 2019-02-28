@@ -14,8 +14,8 @@ import (
 	"time"
 )
 
-const ROOT_DOMAIN_NAME_FOR_TEST = "gcloud-dev.com"
-const MANAGED_ZONE_NAME_FOR_TEST = "gclouddev"
+const ROOT_DOMAIN_NAME_FOR_TEST = "gcloud-test.com"
+const MANAGED_ZONE_NAME_FOR_TEST = "gcloudtest"
 
 const KEY_PROJECT = "project"
 const KEY_DOMAIN_NAME = "domain-name"
@@ -23,8 +23,6 @@ const KEY_DOMAIN_NAME = "domain-name"
 const EXAMPLE_NAME_STATIC_SITE = "cloud-storage-static-website"
 
 func TestCloudStorageStaticSite(t *testing.T) {
-	t.SkipNow()
-
 	t.Parallel()
 
 	//os.Setenv("SKIP_bootstrap", "true")

@@ -20,7 +20,7 @@ variable "dns_managed_zone_name" {
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
-# OPTIONAL MODULE PARAMETERS
+# OPTIONAL PARAMETERS
 # These variables have defaults, but may be overridden by the operator.
 # ---------------------------------------------------------------------------------------------------------------------
 
