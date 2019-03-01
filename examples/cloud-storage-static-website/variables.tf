@@ -25,7 +25,7 @@ variable "dns_managed_zone_name" {
 # ---------------------------------------------------------------------------------------------------------------------
 
 variable "dns_record_ttl" {
-  description = "The time-to-live fir the site CNAME record set (seconds)"
+  description = "The time-to-live for the site CNAME record set (seconds)"
   default     = 60
 }
 
