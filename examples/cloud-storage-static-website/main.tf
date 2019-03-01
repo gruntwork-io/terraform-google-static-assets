@@ -17,18 +17,27 @@ provider "google-beta" {
 # ------------------------------------------------------------------------------
 
 module "static_site" {
-  source                           = "../../modules/cloud-storage-static-website"
-  project                          = "${var.project}"
-  website_domain_name              = "${var.website_domain_name}"
-  website_location                 = "${var.website_location}"
+  # When using these modules in your own templates, you will need to use a Git URL with a ref attribute that pins you
+  # to a specific version of the modules, such as the following example:
+  # source = "git::git@github.com:gruntwork-io/terraform-google-sql.git//modules/cloud-sql?ref=v0.1.0"
+  source = "../../modules/cloud-storage-static-website"
+
+  project = "${var.project}"
+
+  website_domain_name = "${var.website_domain_name}"
+  website_location    = "${var.website_location}"
+
   force_destroy_access_logs_bucket = "${var.force_destroy_access_logs_bucket}"
   force_destroy_website            = "${var.force_destroy_website}"
-  create_dns_entry                 = "${var.create_dns_entry}"
-  dns_record_ttl                   = "${var.dns_record_ttl}"
-  dns_managed_zone_name            = "${var.dns_managed_zone_name}"
-  enable_versioning                = "${var.enable_versioning}"
-  index_page                       = "${var.index_page}"
-  not_found_page                   = "${var.not_found_page}"
+
+  create_dns_entry      = "${var.create_dns_entry}"
+  dns_record_ttl        = "${var.dns_record_ttl}"
+  dns_managed_zone_name = "${var.dns_managed_zone_name}"
+
+  enable_versioning = "${var.enable_versioning}"
+
+  index_page     = "${var.index_page}"
+  not_found_page = "${var.not_found_page}"
 }
 
 # ------------------------------------------------------------------------------

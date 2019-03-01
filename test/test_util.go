@@ -3,16 +3,17 @@ package test
 import (
 	"context"
 	"fmt"
-	"github.com/go-errors/errors"
-	"github.com/gruntwork-io/terratest/modules/logger"
-	"github.com/gruntwork-io/terratest/modules/retry"
-	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"net"
 	"net/http"
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/go-errors/errors"
+	"github.com/gruntwork-io/terratest/modules/logger"
+	"github.com/gruntwork-io/terratest/modules/retry"
+	"github.com/stretchr/testify/assert"
 )
 
 func testWebsite(t *testing.T, protocol string, domainName string, path string, expectedStatusCode int, expectedBodyText string, maxRetries int, sleepBetweenRetries time.Duration) {

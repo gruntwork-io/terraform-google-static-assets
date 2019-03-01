@@ -2,16 +2,18 @@ package test
 
 import (
 	"fmt"
+	"strings"
+	"testing"
+	"time"
+
+	"net/http"
+	"path/filepath"
+
 	"github.com/gruntwork-io/terratest/modules/gcp"
 	"github.com/gruntwork-io/terratest/modules/logger"
 	"github.com/gruntwork-io/terratest/modules/random"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/gruntwork-io/terratest/modules/test-structure"
-	"net/http"
-	"path/filepath"
-	"strings"
-	"testing"
-	"time"
 )
 
 const ROOT_DOMAIN_NAME_FOR_TEST = "gcloud-test.com"

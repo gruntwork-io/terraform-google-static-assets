@@ -30,7 +30,7 @@ storage.googleapis.com/[BUCKET_NAME]/
 
 Where `BUCKET_NAME` is the name you specified for the website with `var.website_domain_name`.
 
-If you set `var.create_dns_entry` to true, then this module will create a DNS A record in [Google Domains](https://domains.google/#/) 
+If you set `var.create_dns_entry` to true, then this module will create a DNS CNAME record in [Google Domains](https://domains.google/#/) 
 for your bucket with the domain name in `var.website_domain_name`, and you will 
 be able to use that custom domain name to access your bucket instead of the `storage.googleapis.com` domain.
 

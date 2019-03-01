@@ -12,11 +12,11 @@ variable "website_domain_name" {
 }
 
 variable "create_dns_entry" {
-  description = "If set to true, create a DNS A Record in Cloud DNS with the domain name in var.website_domain_name."
+  description = "If set to true, create a DNS CNAME Record in Cloud DNS with the domain name in var.website_domain_name."
 }
 
 variable "dns_managed_zone_name" {
-  description = "The name of the Cloud DNS Managed Zone in which to create the DNS A Record specified in var.website_domain_name. Only used if var.create_dns_entry is true."
+  description = "The name of the Cloud DNS Managed Zone in which to create the DNS CNAME Record specified in var.website_domain_name. Only used if var.create_dns_entry is true."
 }
 
 # ---------------------------------------------------------------------------------------------------------------------

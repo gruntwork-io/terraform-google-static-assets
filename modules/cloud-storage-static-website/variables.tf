@@ -107,17 +107,17 @@ variable "access_log_prefix" {
 #}
 
 variable "create_dns_entry" {
-  description = "If set to true, create a DNS A Record in loud DNS with the domain name in var.website_domain_name."
+  description = "If set to true, create a DNS CNAME Record in Cloud DNS with the domain name in var.website_domain_name."
   default     = false
 }
 
 variable "dns_managed_zone_name" {
-  description = "The name of the Cloud DNS Managed Zone in which to create the DNS A Record specified in var.website_domain_name. Only used if var.create_dns_entry is true."
+  description = "The name of the Cloud DNS Managed Zone in which to create the DNS CNAME Record specified in var.website_domain_name. Only used if var.create_dns_entry is true."
   default     = "replace-me"
 }
 
 variable "dns_record_ttl" {
-  description = "The time-to-live fir the site CNAME record set (seconds)"
+  description = "The time-to-live for the site CNAME record set (seconds)"
   default     = 300
 }
 
