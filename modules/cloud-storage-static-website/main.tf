@@ -142,6 +142,7 @@ resource "google_storage_bucket_acl" "analytics_write" {
 # ---------------------------------------------------------------------------------------------------------------------
 
 resource "google_dns_record_set" "cname" {
+  provider = "google-beta"
   count = "${var.create_dns_entry == "true" ? 1 : 0}"
 
   depends_on = ["google_storage_bucket.website"]
