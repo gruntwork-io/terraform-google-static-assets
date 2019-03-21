@@ -1,125 +1,114 @@
 package test
 
 import (
-	"context"
+	"crypto/tls"
 	"fmt"
 	"io/ioutil"
-	"net"
 	"net/http"
 	"strings"
 	"testing"
 	"time"
 
-	"github.com/go-errors/errors"
 	"github.com/gruntwork-io/terratest/modules/logger"
 	"github.com/gruntwork-io/terratest/modules/retry"
 	"github.com/stretchr/testify/assert"
 )
 
-func testWebsite(t *testing.T, protocol string, domainName string, path string, expectedStatusCode int, expectedBodyText string, maxRetries int, sleepBetweenRetries time.Duration) {
+const ROOT_DOMAIN_NAME_FOR_TEST = "gcloud-dev.com"
+const MANAGED_ZONE_NAME_FOR_TEST = "gclouddev"
 
-	url := fmt.Sprintf("%s://%s/%s", protocol, domainName, path)
-	description := fmt.Sprintf("Making HTTP request to %s", url)
+//const ROOT_DOMAIN_NAME_FOR_TEST = "gcloud-test.com"
+//const MANAGED_ZONE_NAME_FOR_TEST = "gcloudtest"
 
-	port := "80"
-	if strings.Contains(protocol, "https") {
-		port = "443"
+const KEY_PROJECT = "project"
+const KEY_NAME = "name"
+const KEY_DOMAIN_NAME = "domain-name"
+
+const OUTPUT_LB_IP_ADDRESS = "load_balancer_ip_address"
+
+const EXAMPLE_NAME_LB_SITE = "http-load-balancer-website"
+const EXAMPLE_NAME_STATIC_SITE = "cloud-storage-static-website"
+
+const TEST_WEBSITE_MAX_RETRIES = 30
+const TEST_WEBSITE_SLEEP_TIME = 30 * time.Second
+
+func testWebsite(t *testing.T, protocol string, url string, path string, expectedStatus int, expectedBody string) {
+	finalUrl := fmt.Sprintf("%s://%s%s", protocol, url, path)
+	// Resource propagation takes long, so we'll allow a lot of time to survive that
+	err := HttpGetWithRetryE(t, finalUrl, expectedStatus, expectedBody, TEST_WEBSITE_MAX_RETRIES, TEST_WEBSITE_SLEEP_TIME)
+	assert.NoError(t, err, "Failed to call URL %s", url)
+}
+
+// A lot of this is repetition from terratest http_helper, but to allow the custom TLS Config, we're
+// implementing the methods here, instead.
+// TODO: Look into possibility of incorporating the TLS flag into terratest
+
+func HttpGetE(t *testing.T, url string) (int, string, error) {
+	logger.Logf(t, "Making a GET call to URL %s", url)
+
+	transCfg := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, // ignore expired SSL certificates
 	}
 
-	output, err := retry.DoWithRetryE(t, description, maxRetries, sleepBetweenRetries, func() (s string, e error) {
+	client := &http.Client{
+		Transport: transCfg,
+		// By default, Go does not impose a timeout, so an HTTP connection attempt can hang for a LONG time.
+		Timeout: 10 * time.Second,
+	}
 
-		logger.Logf(t, description)
+	resp, err := client.Get(url)
+	if err != nil {
+		return -1, "", err
+	}
 
-		// Go default DNS resolving doesn't really do a great job
-		// so we're using custom resolving
-		ip, iperr := lookupIP(t, domainName)
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
 
-		if iperr != nil {
-			return "", iperr
-		}
+	if err != nil {
+		return -1, "", err
+	}
 
-		address := fmt.Sprintf("%s:%s", ip, port)
-		domainWithPort := fmt.Sprintf("%s:%s", domainName, port)
+	return resp.StatusCode, strings.TrimSpace(string(body)), nil
+}
 
-		// Create a basic dialer
-		dialer := &net.Dialer{
-			Timeout:   10 * time.Second,
-			KeepAlive: 10 * time.Second,
-			DualStack: true,
-		}
-
-		// We looked up the IP, let's inject it into the http dial context
-		http.DefaultTransport.(*http.Transport).DialContext = func(ctx context.Context, network, addr string) (net.Conn, error) {
-			if addr == domainWithPort {
-				addr = address
-			}
-			return dialer.DialContext(ctx, network, addr)
-		}
-
-		resp, err := http.Get(url)
-		if err != nil {
-			return "", err
-		}
-
-		defer resp.Body.Close()
-		body, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			return "", err
-		}
-
-		if resp.StatusCode == expectedStatusCode {
-			logger.Logf(t, "Got expected status code %d from URL %s", expectedStatusCode, url)
-			return string(body), nil
-		} else {
-			return "", fmt.Errorf("Expected status code %d but got %d from URL %s", expectedStatusCode, resp.StatusCode, url)
-		}
-
+func HttpGetWithRetryE(t *testing.T, url string, expectedStatus int, expectedBody string, retries int, sleepBetweenRetries time.Duration) error {
+	_, err := retry.DoWithRetryE(t, fmt.Sprintf("HTTP GET to URL %s", url), retries, sleepBetweenRetries, func() (string, error) {
+		return "", HttpGetWithValidationE(t, url, expectedStatus, expectedBody)
 	})
 
-	assert.NoError(t, err, "Failed to call URL %s", url)
-
-	if strings.Contains(output, expectedBodyText) {
-		logger.Logf(t, "URL %s contained expected text %s!", url, expectedBodyText)
-	} else {
-		t.Fatalf("URL %s did not contain expected text %s. Instead, it returned:\n%s", url, expectedBodyText, output)
-	}
+	return err
 }
 
-func lookupIP(t *testing.T, domainName string) (string, error) {
-	description := fmt.Sprintf("Resolving domain %s", domainName)
+// HttpGetWithValidationE performs an HTTP GET on the given URL and verify that you get back the expected status code and body. If either
+// doesn't match, return an error.
+func HttpGetWithValidationE(t *testing.T, url string, expectedStatusCode int, expectedBody string) error {
+	return HttpGetWithCustomValidationE(t, url, func(statusCode int, body string) bool {
+		return statusCode == expectedStatusCode && body == expectedBody
+	})
+}
 
-	// Go default DNS resolving doesn't really do a great job
-	// So... we're creating a custom resolver to query Google DNS directly
-	// Which is OK, as we're creating the site in GCP, after all
-	r := net.Resolver{
-		PreferGo: true,
-		Dial:     GoogleDNSDialer,
-	}
-	ctx := context.Background()
+// HttpGetWithCustomValidationE performs an HTTP GET on the given URL and validate the returned status code and body using the given function.
+func HttpGetWithCustomValidationE(t *testing.T, url string, validateResponse func(int, string) bool) error {
+	statusCode, body, err := HttpGetE(t, url)
 
-	logger.Logf(t, description)
-
-	ips, err := r.LookupIPAddr(ctx, domainName)
 	if err != nil {
-		logger.Logf(t, "Could not get IPs: %v\n", err)
-		return "", err
+		return err
 	}
 
-	for _, ip := range ips {
-		logger.Logf(t, "Got IP %s", ip.String())
-		if strings.Contains(ip.String(), ".") {
-			return ip.String(), nil
-		}
+	if !validateResponse(statusCode, body) {
+		return ValidationFunctionFailed{Url: url, Status: statusCode, Body: body}
 	}
 
-	return "", errors.New("Could not find IPV4 address")
-
+	return nil
 }
 
-func GoogleDNSDialer(ctx context.Context, network, address string) (net.Conn, error) {
-	d := net.Dialer{}
-	if network == "udp" {
-		return d.DialContext(ctx, "udp", "8.8.8.8:53")
-	}
-	return d.DialContext(ctx, network, address)
+// ValidationFunctionFailed is an error that occurs if a validation function fails.
+type ValidationFunctionFailed struct {
+	Url    string
+	Status int
+	Body   string
+}
+
+func (err ValidationFunctionFailed) Error() string {
+	return fmt.Sprintf("Validation failed for URL %s. Response status: %d. Response body:\n%s", err.Url, err.Status, err.Body)
 }

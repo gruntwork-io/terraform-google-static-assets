@@ -53,9 +53,9 @@ You can read more about access control here: https://cloud.google.com/storage/do
 Accessing through google storage domain is by default having SSL enabled. However, when you intend to use a custom domain, Google Cloud Storage does not enable SSL on a custom domain.
 
 To serve your content through a custom domain over SSL, you can 
-* [set up a load balancer](https://cloud.google.com/compute/docs/load-balancing/http/adding-a-backend-bucket-to-content-based-load-balancing)
+* Use the [cloud-load-balancer-website](../cloud-load-balancer-website) module
 
-* [use a third-party Content Delivery Network](https://cloudplatform.googleblog.com/2015/09/push-google-cloud-origin-content-out-to-users.html) with Cloud Storage
+* [Use a third-party Content Delivery Network](https://cloudplatform.googleblog.com/2015/09/push-google-cloud-origin-content-out-to-users.html) with Cloud Storage
   <!-- * Serve your static website content from [Firebase Hosting](https://firebase.google.com/docs/hosting/) using the using the [Firebase CDN module](/modules/firebase-cdn). --> 
 
   

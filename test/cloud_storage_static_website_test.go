@@ -2,12 +2,10 @@ package test
 
 import (
 	"fmt"
-	"strings"
-	"testing"
-	"time"
-
 	"net/http"
 	"path/filepath"
+	"strings"
+	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/gcp"
 	"github.com/gruntwork-io/terratest/modules/logger"
@@ -15,14 +13,6 @@ import (
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/gruntwork-io/terratest/modules/test-structure"
 )
-
-const ROOT_DOMAIN_NAME_FOR_TEST = "gcloud-test.com"
-const MANAGED_ZONE_NAME_FOR_TEST = "gcloudtest"
-
-const KEY_PROJECT = "project"
-const KEY_DOMAIN_NAME = "domain-name"
-
-const EXAMPLE_NAME_STATIC_SITE = "cloud-storage-static-website"
 
 func TestCloudStorageStaticSite(t *testing.T) {
 	t.Parallel()
@@ -73,14 +63,12 @@ func TestCloudStorageStaticSite(t *testing.T) {
 		expectedIndexBody := "Hello, World!"
 		expectedNotFoundBody := "Uh oh"
 
-		// Go seems to cache the DNS results quite heavily, so we'll add
-		// a lot of time to survive that
-		maxRetries := 20
-		sleepBetweenRetries := 30 * time.Second
+		// Test http with the configured domain name
+		testWebsite(t, "http", domainName, "", http.StatusOK, expectedIndexBody)
+		testWebsite(t, "http", domainName, "/bogus", http.StatusNotFound, expectedNotFoundBody)
 
-		testWebsite(t, "http", domainName, "", http.StatusOK, expectedIndexBody, maxRetries, sleepBetweenRetries)
-		testWebsite(t, "http", domainName, "bogus", http.StatusNotFound, expectedNotFoundBody, maxRetries, sleepBetweenRetries)
-
+		// Test that individual objects are accessible with HTTPS
+		testWebsite(t, "https", "storage.googleapis.com", fmt.Sprintf("/%s/index.html", domainName), http.StatusOK, expectedIndexBody)
 	})
 }
 

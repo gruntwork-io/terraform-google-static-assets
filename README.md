@@ -7,6 +7,7 @@ This repo contains modules for managing static assets (CSS, JS, images) in GCP.
 ## Code included in this Module
 
 * [cloud-storage-static-website](/modules/cloud-storage-static-website): Deploy static content (e.g. HTML, CSS, JS) in a Cloud Storage bucket.
+* [cloud-load-balancer-website](/modules/cloud-load-balancer-website): Deploy static content (e.g. HTML, CSS, JS) in a Cloud Storage bucket.
 
 
 ## Who maintains this Module?
