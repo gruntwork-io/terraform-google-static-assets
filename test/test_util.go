@@ -14,14 +14,13 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-const ROOT_DOMAIN_NAME_FOR_TEST = "gcloud-dev.com"
-const MANAGED_ZONE_NAME_FOR_TEST = "gclouddev"
+//const ROOT_DOMAIN_NAME_FOR_TEST = "gcloud-dev.com"
+//const MANAGED_ZONE_NAME_FOR_TEST = "gclouddev"
 
-//const ROOT_DOMAIN_NAME_FOR_TEST = "gcloud-test.com"
-//const MANAGED_ZONE_NAME_FOR_TEST = "gcloudtest"
+const ROOT_DOMAIN_NAME_FOR_TEST = "gcloud-test.com"
+const MANAGED_ZONE_NAME_FOR_TEST = "gcloudtest"
 
 const KEY_PROJECT = "project"
-const KEY_NAME = "name"
 const KEY_DOMAIN_NAME = "domain-name"
 
 const OUTPUT_LB_IP_ADDRESS = "load_balancer_ip_address"
