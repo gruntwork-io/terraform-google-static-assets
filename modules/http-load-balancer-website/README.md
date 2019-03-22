@@ -12,7 +12,7 @@ Some benefits of serving your static assets, like images or JavaScript files, wi
 
 ## Quick Start
 
-* See the [cloud-load-balancer-website example](/examples/cloud-load-balancer-static-website) for working sample code.
+* See the [http-load-balancer-website example](/examples/http-load-balancer-static-website) for working sample code.
 * Check out [variables.tf](variables.tf) for all parameters you can set for this module.
 
 
