@@ -1,6 +1,6 @@
 output "website_url" {
   description = "URL of the website"
-  value       = "${var.create_dns_entry == "true" ? var.website_domain_name : module.load_balancer.load_balancer_ip_address}"
+  value       = "${var.create_dns_entry ? var.website_domain_name : module.load_balancer.load_balancer_ip_address}"
 }
 
 output "load_balancer_ip_address" {
