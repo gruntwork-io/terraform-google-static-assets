@@ -32,7 +32,7 @@ be able to use that custom domain name to access your bucket instead of the IP a
 
 By default, the module makes your website publicly accessible by setting the website bucket default object ACL to `"READER:allUsers"`. For more fine-grained access control, you can set [ACLs](https://cloud.google.com/storage/docs/access-control/lists) using the `website_acls`  variable, for example ["READER:your-work-group@googlegroups.com"]  
 
-You can read more about access control here: https://cloud.google.com/storage/docs/access-control/
+You can read more about access control in [the official documentation](https://cloud.google.com/storage/docs/access-control/).
 
 
 
