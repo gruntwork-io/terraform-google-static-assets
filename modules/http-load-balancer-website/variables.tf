@@ -36,6 +36,26 @@ variable "enable_versioning" {
   default     = true
 }
 
+variable "enable_ssl" {
+  description = "Set to true to enable ssl. If set to 'true', you will also have to provide 'var.ssl_certificate'."
+  default     = false
+}
+
+variable "ssl_certificate" {
+  description = "SSL certificate self_link. Required if 'enable_ssl' is 'true'."
+  default     = ""
+}
+
+variable "enable_http" {
+  description = "Set to true to enable plain http. Note that disabling http does not force SSL and/or redirect HTTP traffic. See https://issuetracker.google.com/issues/35904733"
+  default     = true
+}
+
+variable "enable_cdn" {
+  description = "Set to `true` to enable cdn on website backend bucket."
+  default     = true
+}
+
 variable "index_page" {
   description = "Bucket's directory index"
   default     = "index.html"
