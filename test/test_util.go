@@ -14,6 +14,9 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// ----------------------------------------------------------
+// When testing against dev-sandbox account, use these, instead
+// ----------------------------------------------------------
 //const ROOT_DOMAIN_NAME_FOR_TEST = "gcloud-dev.com"
 //const MANAGED_ZONE_NAME_FOR_TEST = "gclouddev"
 
