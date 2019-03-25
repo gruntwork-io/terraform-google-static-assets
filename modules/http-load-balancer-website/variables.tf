@@ -114,6 +114,7 @@ variable "access_log_prefix" {
   default     = ""
 }
 
+# TODO: KMS FIX
 # We disable custom KMS keys until we have a fix for
 # https://github.com/terraform-providers/terraform-provider-google/issues/3134
 #variable "website_kms_key_name" {
