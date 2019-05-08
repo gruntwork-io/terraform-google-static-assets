@@ -1,5 +1,7 @@
 [![Maintained by Gruntwork.io](https://img.shields.io/badge/maintained%20by-gruntwork.io-%235849a6.svg)](https://gruntwork.io/?ref=repo_google_static_assets)
 
+<!-- NOTE: Because the module is published to Terraform Module Registry, we have to use absolute links in all READMEs. -->
+
 # Static Assets Modules
 
 This repo contains modules for managing static assets (CSS, JS, images) in GCP.
