@@ -766,7 +766,6 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
-    "github.com/go-errors/errors",
     "github.com/gruntwork-io/terratest/modules/gcp",
     "github.com/gruntwork-io/terratest/modules/logger",
     "github.com/gruntwork-io/terratest/modules/random",

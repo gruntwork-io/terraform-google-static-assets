@@ -4,11 +4,33 @@
 
 This repo contains modules for managing static assets (CSS, JS, images) in GCP.
 
-## Code included in this Module
+## Quickstart
 
-* [cloud-storage-static-website](/modules/cloud-storage-static-website): Deploy a [Google Cloud Storage](https://cloud.google.com/storage/) bucket that can be used to host a [static website](https://cloud.google.com/storage/docs/hosting-static-website).
-* [http-load-balancer-website](/modules/http-load-balancer-website): Deploy a [HTTP Load Balancer](https://cloud.google.com/load-balancing/docs/https/) that routes requests to a [Google Cloud Storage](https://cloud.google.com/storage/) bucket for static content hosting.
+If you want to quickly launch a static website using [Google Cloud Storage](https://cloud.google.com/storage/), 
+you can run the example that is in the root of this repo. Check out the [cloud-storage-static-website example documentation](https://github.com/gruntwork-io/terraform-google-static-assets/blob/master/examples/cloud-storage-static-website) for instructions.
 
+## What's in this repo
+
+This repo has the following folder structure:
+
+* [root](https://github.com/gruntwork-io/terraform-google-static-assets/tree/master): The root folder contains an example of how to launch a static website using [Google Cloud Storage](https://cloud.google.com/storage/). See [cloud-storage-static-website example documentation](https://github.com/gruntwork-io/terraform-google-static-assets/blob/master/examples/cloud-storage-static-website) for the documentation.
+
+* [modules](https://github.com/gruntwork-io/terraform-google-static-assets/blob/master/modules): This folder contains the main implementation code for this Module.
+
+  The primary modules are:
+
+    * [cloud-storage-static-website](https://github.com/gruntwork-io/terraform-google-static-assets/blob/master/modules/cloud-storage-static-website): 
+    The Cloud Storage Static Website module is used to create a [Google Cloud Storage](https://cloud.google.com/storage/) 
+    bucket that can be used to host a [static website](https://cloud.google.com/storage/docs/hosting-static-website).
+
+    * [http-load-balancer-website](https://github.com/gruntwork-io/terraform-google-static-assets/blob/master/modules/http-load-balancer-website): 
+    The HTTP Load Balancer Website module is used to create a [HTTP Load Balancer](https://cloud.google.com/load-balancing/docs/https/) 
+    that routes requests to a [Google Cloud Storage](https://cloud.google.com/storage/) bucket for static content hosting, 
+    allowing you to also configure SSL with a custom domain name.
+
+* [examples](https://github.com/gruntwork-io/terraform-google-static-assets/blob/master/examples): This folder contains examples of how to use the submodules.
+
+* [test](https://github.com/gruntwork-io/terraform-google-static-assets/blob/master/test): Automated tests for the submodules and examples.
 
 ## Who maintains this Module?
 
