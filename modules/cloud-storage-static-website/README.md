@@ -13,8 +13,8 @@ Some benefits of hosting your static assets, like images or JavaScript files, in
 
 ## Quick Start
 
-* See the [cloud-storage-static-website example](/examples/cloud-storage-static-website) for working sample code.
-* Check out [variables.tf](variables.tf) for all parameters you can set for this module.
+* See the [cloud-storage-static-website example](https://github.com/gruntwork-io/terraform-google-static-assets/blob/master/examples/cloud-storage-static-website) for working sample code.
+* Check out [variables.tf](https://github.com/gruntwork-io/terraform-google-static-assets/blob/master/variables.tf) for all parameters you can set for this module.
 
 
 
@@ -53,7 +53,7 @@ You can read more about access control here: https://cloud.google.com/storage/do
 Accessing through google storage domain is by default having SSL enabled. However, when you intend to use a custom domain, Google Cloud Storage does not enable SSL on a custom domain.
 
 To serve your content through a custom domain over SSL, you can 
-* Use the [cloud-load-balancer-website](../cloud-load-balancer-website) module
+* Use the [http-load-balancer-website](https://github.com/gruntwork-io/terraform-google-static-assets/tree/master/modules/http-load-balancer-website) module
 
 * [Use a third-party Content Delivery Network](https://cloudplatform.googleblog.com/2015/09/push-google-cloud-origin-content-out-to-users.html) with Cloud Storage
   <!-- * Serve your static website content from [Firebase Hosting](https://firebase.google.com/docs/hosting/) using the using the [Firebase CDN module](/modules/firebase-cdn). --> 

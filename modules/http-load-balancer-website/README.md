@@ -15,8 +15,8 @@ application and content delivery
 
 ## Quick Start
 
-* See the [http-load-balancer-website example](/examples/http-load-balancer-static-website) for working sample code.
-* Check out [variables.tf](variables.tf) for all parameters you can set for this module.
+* See the [http-load-balancer-website example](https://github.com/gruntwork-io/terraform-google-static-assets/tree/master/examples/http-load-balancer-website) for working sample code.
+* Check out [variables.tf](https://github.com/gruntwork-io/terraform-google-static-assets/blob/master/modules/http-load-balancer-website/variables.tf) for all parameters you can set for this module.
 
 
 ## How do I test my website?
