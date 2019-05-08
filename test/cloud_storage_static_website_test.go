@@ -3,7 +3,6 @@ package test
 import (
 	"fmt"
 	"net/http"
-	"os"
 	"strings"
 	"testing"
 
@@ -17,9 +16,9 @@ import (
 func TestCloudStorageStaticSite(t *testing.T) {
 	t.Parallel()
 
-	os.Setenv("SKIP_bootstrap", "true")
-	os.Setenv("SKIP_deploy", "true")
-	os.Setenv("SKIP_web_tests", "true")
+	//os.Setenv("SKIP_bootstrap", "true")
+	//os.Setenv("SKIP_deploy", "true")
+	//os.Setenv("SKIP_web_tests", "true")
 	//os.Setenv("SKIP_teardown", "true")
 
 	// The example is the root example
