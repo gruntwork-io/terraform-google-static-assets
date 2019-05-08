@@ -1,6 +1,6 @@
 # Cloud Storage Static Website Example
 
-This folder shows an example of how to use the [cloud-storage-static-website module](/modules/cloud-storage-static-website) to launch a
+The root folder of this repo shows an example of how to use the [cloud-storage-static-website module](/modules/cloud-storage-static-website) to launch a
 static website on top of [Google Cloud Storage](https://cloud.google.com/storage/). 
 
 
@@ -9,6 +9,7 @@ static website on top of [Google Cloud Storage](https://cloud.google.com/storage
 To run this example, you need to:
    
 1. Install [Terraform](https://www.terraform.io/).
+1. Make sure you are in the root folder of the repo.
 1. Open up `variables.tf` and set secrets at the top of the file as environment variables and fill in any other variables in the file that don't have defaults. 
 1. `terraform init`.
 1. `terraform plan`.

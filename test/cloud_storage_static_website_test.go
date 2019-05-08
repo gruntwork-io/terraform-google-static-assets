@@ -3,7 +3,6 @@ package test
 import (
 	"fmt"
 	"net/http"
-	"path/filepath"
 	"strings"
 	"testing"
 
@@ -22,8 +21,8 @@ func TestCloudStorageStaticSite(t *testing.T) {
 	//os.Setenv("SKIP_web_tests", "true")
 	//os.Setenv("SKIP_teardown", "true")
 
-	_examplesDir := test_structure.CopyTerraformFolderToTemp(t, "../", "examples")
-	exampleDir := filepath.Join(_examplesDir, EXAMPLE_NAME_STATIC_SITE)
+	// The example is the root example
+	exampleDir := test_structure.CopyTerraformFolderToTemp(t, "../", ".")
 
 	test_structure.RunTestStage(t, "bootstrap", func() {
 		logger.Logf(t, "Bootstrapping variables")
