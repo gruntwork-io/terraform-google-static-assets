@@ -1,6 +1,6 @@
 # Cloud Storage Static Website Example
 
-The root folder of this repo shows an example of how to use the [cloud-storage-static-website module](/modules/cloud-storage-static-website) to launch a
+The root folder of this repo shows an example of how to use the [cloud-storage-static-website module](https://github.com/gruntwork-io/terraform-google-static-assets/tree/master/modules/cloud-storage-static-website) to launch a
 static website on top of [Google Cloud Storage](https://cloud.google.com/storage/). 
 
 
