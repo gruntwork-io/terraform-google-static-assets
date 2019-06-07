@@ -18,6 +18,8 @@ terraform {
 locals {
   # We have to use dashes instead of dots in the access log bucket, because that bucket is not a website
   website_domain_name_dashed = replace(var.website_domain_name, ".", "-")
+  access_log_kms_keys        = var.access_logs_kms_key_name == "" ? [] : [var.access_logs_kms_key_name]
+  website_kms_keys           = var.website_kms_key_name == "" ? [] : [var.website_kms_key_name]
 }
 
 # ------------------------------------------------------------------------------
@@ -54,11 +56,12 @@ resource "google_storage_bucket" "website" {
 
   force_destroy = var.force_destroy_website
 
-  # We disable custom KMS keys until we have a fix for
-  # https://github.com/terraform-providers/terraform-provider-google/issues/3134
-  #encryption {
-  #  default_kms_key_name = "${var.website_kms_key_name}"
-  #}
+  dynamic "encryption" {
+    for_each = local.website_kms_keys
+    content {
+      default_kms_key_name = encryption.value
+    }
+  }
 
   labels = var.custom_labels
   logging {
@@ -93,11 +96,12 @@ resource "google_storage_bucket" "access_logs" {
 
   force_destroy = var.force_destroy_access_logs_bucket
 
-  # We disable custom KMS keys until we have a fix for
-  # https://github.com/terraform-providers/terraform-provider-google/issues/3134
-  #encryption {
-  #  default_kms_key_name = "${var.access_logs_kms_key_name}"
-  #}
+  dynamic "encryption" {
+    for_each = local.access_log_kms_keys
+    content {
+      default_kms_key_name = encryption.value
+    }
+  }
 
   lifecycle_rule {
     action {
