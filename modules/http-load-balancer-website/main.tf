@@ -71,7 +71,7 @@ module "site_bucket" {
   project = var.project
 
   website_domain_name   = local.website_domain_name_dashed
-  website_acls          = [var.website_acls]
+  website_acls          = var.website_acls
   website_location      = var.website_location
   website_storage_class = var.website_storage_class
   force_destroy_website = var.force_destroy_website
@@ -86,10 +86,10 @@ module "site_bucket" {
   force_destroy_access_logs_bucket    = var.force_destroy_access_logs_bucket
 
   enable_cors          = var.enable_cors
-  cors_extra_headers   = [var.cors_extra_headers]
+  cors_extra_headers   = var.cors_extra_headers
   cors_max_age_seconds = var.cors_max_age_seconds
-  cors_methods         = [var.cors_methods]
-  cors_origins         = [var.cors_origins]
+  cors_methods         = var.cors_methods
+  cors_origins         = var.cors_origins
 
   # We don't want a separate CNAME entry
   create_dns_entry = false
