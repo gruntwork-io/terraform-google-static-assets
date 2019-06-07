@@ -17,11 +17,11 @@ import (
 // ----------------------------------------------------------
 // When testing against dev-sandbox account, use these, instead
 // ----------------------------------------------------------
-const ROOT_DOMAIN_NAME_FOR_TEST = "gcloud-dev.com"
-const MANAGED_ZONE_NAME_FOR_TEST = "gclouddev"
+//const ROOT_DOMAIN_NAME_FOR_TEST = "gcloud-dev.com"
+//const MANAGED_ZONE_NAME_FOR_TEST = "gclouddev"
 
-//const ROOT_DOMAIN_NAME_FOR_TEST = "gcloud-test.com"
-//const MANAGED_ZONE_NAME_FOR_TEST = "gcloudtest"
+const ROOT_DOMAIN_NAME_FOR_TEST = "gcloud-test.com"
+const MANAGED_ZONE_NAME_FOR_TEST = "gcloudtest"
 
 const KEY_PROJECT = "project"
 const KEY_DOMAIN_NAME = "domain-name"
