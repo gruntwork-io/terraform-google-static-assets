@@ -27,7 +27,7 @@ variable "website_storage_class" {
 
 variable "website_acls" {
   description = "Bucket default object ACLs to allow users access to objects, for example 'READER:allUsers'. See https://cloud.google.com/storage/docs/access-control/lists"
-  type        = "list"
+  type        = list(string)
   default     = ["READER:allUsers"]
 }
 
@@ -73,19 +73,19 @@ variable "enable_cors" {
 
 variable "cors_origins" {
   description = "List of Origins eligible to receive CORS response headers. Note: '*' is permitted in the list of origins, and means 'any Origin'"
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
 variable "cors_methods" {
   description = "list of HTTP methods on which to include CORS response headers, (GET, OPTIONS, POST, etc). Note: '*' is permitted in the list of methods, and means 'any method'"
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
 variable "cors_extra_headers" {
   description = "List of HTTP headers other than the simple response headers to give permission for the user-agent to share across domains"
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
@@ -144,6 +144,7 @@ variable "dns_record_ttl" {
 
 variable "custom_labels" {
   description = "A map of custom labels to apply to the resources. The key is the label name and the value is the label value."
-  type        = "map"
+  type        = map(string)
   default     = {}
 }
+
