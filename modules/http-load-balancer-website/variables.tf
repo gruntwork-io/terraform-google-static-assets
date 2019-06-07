@@ -131,20 +131,17 @@ variable "access_log_prefix" {
   default     = ""
 }
 
-# TODO: KMS FIX
-# We disable custom KMS keys until we have a fix for
-# https://github.com/terraform-providers/terraform-provider-google/issues/3134
-#variable "website_kms_key_name" {
-#  description = "A Cloud KMS key that will be used to encrypt objects inserted into the website bucket. If empty, the contents will not be encrypted. You must pay attention to whether the crypto key is available in the location that this bucket is created in."
-#  type = string
-#  default     = ""
-#}
+variable "website_kms_key_name" {
+  description = "A Cloud KMS key that will be used to encrypt objects inserted into the website bucket. If empty, the contents will not be encrypted. You must pay attention to whether the crypto key is available in the location that this bucket is created in."
+  type        = string
+  default     = ""
+}
 
-#variable "access_logs_kms_key_name" {
-#  description = "A Cloud KMS key that will be used to encrypt objects inserted into the access logs bucket. If empty, the contents will not be encrypted. You must pay attention to whether the crypto key is available in the location that this bucket is created in."
-#  type = string
-#  default     = ""
-#}
+variable "access_logs_kms_key_name" {
+  description = "A Cloud KMS key that will be used to encrypt objects inserted into the access logs bucket. If empty, the contents will not be encrypted. You must pay attention to whether the crypto key is available in the location that this bucket is created in."
+  type        = string
+  default     = ""
+}
 
 variable "create_dns_entry" {
   description = "If set to true, create a DNS CNAME Record in Cloud DNS with the domain name in var.website_domain_name."

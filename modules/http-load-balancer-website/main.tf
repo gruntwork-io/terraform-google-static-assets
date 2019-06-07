@@ -85,6 +85,9 @@ module "site_bucket" {
   access_logs_expiration_time_in_days = var.access_logs_expiration_time_in_days
   force_destroy_access_logs_bucket    = var.force_destroy_access_logs_bucket
 
+  website_kms_key_name     = var.website_kms_key_name
+  access_logs_kms_key_name = var.access_logs_kms_key_name
+
   enable_cors          = var.enable_cors
   cors_extra_headers   = var.cors_extra_headers
   cors_max_age_seconds = var.cors_max_age_seconds
