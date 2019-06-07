@@ -130,12 +130,12 @@ resource "google_storage_bucket_acl" "analytics_write" {
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
-# CREATE CNAME ENTRY IN DNS
+# CREATE OPTIONAL CNAME ENTRY IN CLOUD DNS
 # ---------------------------------------------------------------------------------------------------------------------
 
 resource "google_dns_record_set" "cname" {
   provider = google-beta
-  count    = var.create_dns_entry == "true" ? 1 : 0
+  count    = var.create_dns_entry ? 1 : 0
 
   depends_on = [google_storage_bucket.website]
 
