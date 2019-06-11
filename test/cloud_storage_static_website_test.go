@@ -79,10 +79,10 @@ func createTerratestOptionsForStaticSite(exampleDir string, projectId string, do
 		Vars: map[string]interface{}{
 			"project":                          projectId,
 			"website_domain_name":              domainName,
-			"create_dns_entry":                 "true",
+			"create_dns_entry":                 true,
 			"dns_managed_zone_name":            zoneName,
-			"force_destroy_website":            "true",
-			"force_destroy_access_logs_bucket": "true",
+			"force_destroy_website":            true,
+			"force_destroy_access_logs_bucket": true,
 		},
 	}
 
