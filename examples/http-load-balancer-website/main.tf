@@ -16,6 +16,7 @@ terraform {
 # ------------------------------------------------------------------------------
 
 provider "google-beta" {
+  version = "~> 3.43.0"
   project = var.project
 }
 
