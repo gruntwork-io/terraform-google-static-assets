@@ -4,8 +4,10 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 terraform {
-  # This module has been updated with 0.12 syntax, which means it is no longer compatible with any versions below 0.12.
-  required_version = ">= 0.12"
+  # This module is now only being tested with Terraform 0.13.x. However, to make upgrading easier, we are setting
+  # 0.12.26 as the minimum version, as that version added support for required_providers with source URLs, making it
+  # forwards compatible with 0.13.x code.
+  required_version = ">= 0.12.26"
 }
 
 # ------------------------------------------------------------------------------
@@ -19,7 +21,7 @@ locals {
 }
 
 module "load_balancer" {
-  source = "github.com/gruntwork-io/terraform-google-load-balancer.git//modules/http-load-balancer?ref=tf12"
+  source = "github.com/gruntwork-io/terraform-google-load-balancer.git//modules/http-load-balancer?ref=v0.2.2"
 
   name                  = local.website_domain_name_dashed
   project               = var.project
@@ -99,4 +101,3 @@ module "site_bucket" {
 
   custom_labels = var.custom_labels
 }
-

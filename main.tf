@@ -5,9 +5,10 @@
 # ---------------------------------------------------------------------------------------------------------------------
 
 terraform {
-  # The modules used in this example have been updated with 0.12 syntax, which means the example is no longer
-  # compatible with any versions below 0.12.
-  required_version = ">= 0.12"
+  # This module is now only being tested with Terraform 0.13.x. However, to make upgrading easier, we are setting
+  # 0.12.26 as the minimum version, as that version added support for required_providers with source URLs, making it
+  # forwards compatible with 0.13.x code.
+  required_version = ">= 0.12.26"
 }
 
 # ------------------------------------------------------------------------------
@@ -15,6 +16,7 @@ terraform {
 # ------------------------------------------------------------------------------
 
 provider "google-beta" {
+  version = "~> 3.50.0"
   project = var.project
 }
 
@@ -77,4 +79,3 @@ resource "google_storage_object_acl" "not_found_acl" {
   object      = google_storage_bucket_object.not_found.name
   role_entity = ["READER:allUsers"]
 }
-
