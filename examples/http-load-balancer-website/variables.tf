@@ -84,3 +84,8 @@ variable "force_destroy_access_logs_bucket" {
   default     = true
 }
 
+variable "custom_headers" {
+  description = "A list of custom Headers that the HTTP/S load balancer should add to proxied responses"
+  type        = list(string)
+  default     = ["Referrer-Policy: origin"]
+}

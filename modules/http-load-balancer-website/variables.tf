@@ -167,3 +167,8 @@ variable "custom_labels" {
   default     = {}
 }
 
+variable "custom_headers" {
+  description = "A list of custom Headers that the HTTP/S load balancer should add to proxied responses"
+  type        = list(string)
+  default     = []
+}
