@@ -53,6 +53,12 @@ variable "ssl_certificate" {
   default     = ""
 }
 
+variable "ssl_policy" {
+  description = "A reference to the SslPolicy resource that will be associated with the TargetHttpsProxy resource. If not set, the TargetHttpsProxy resource will not have any SSL policy configured."
+  type        = string
+  default     = null
+}
+
 variable "enable_http" {
   description = "Set to true to enable plain http. Note that disabling http does not force SSL and/or redirect HTTP traffic. See https://issuetracker.google.com/issues/35904733"
   type        = bool
@@ -166,4 +172,3 @@ variable "custom_labels" {
   type        = map(string)
   default     = {}
 }
-

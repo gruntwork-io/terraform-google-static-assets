@@ -33,6 +33,7 @@ module "load_balancer" {
   enable_http           = var.enable_http
   enable_ssl            = var.enable_ssl
   ssl_certificates      = [var.ssl_certificate]
+  ssl_policy            = var.ssl_policy
   custom_labels         = var.custom_labels
 }
 
