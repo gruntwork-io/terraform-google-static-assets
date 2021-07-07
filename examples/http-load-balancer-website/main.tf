@@ -58,6 +58,8 @@ module "static_site" {
   enable_http = var.enable_http
 
   ssl_certificate = join("", google_compute_ssl_certificate.certificate.*.self_link)
+
+  custom_headers = var.custom_headers
 }
 
 # ------------------------------------------------------------------------------

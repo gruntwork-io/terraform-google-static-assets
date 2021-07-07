@@ -58,9 +58,10 @@ resource "google_compute_backend_bucket" "static" {
   provider = google-beta
   project  = var.project
 
-  name        = "${local.website_domain_name_dashed}-bucket"
-  bucket_name = module.site_bucket.website_bucket_name
-  enable_cdn  = var.enable_cdn
+  name                    = "${local.website_domain_name_dashed}-bucket"
+  bucket_name             = module.site_bucket.website_bucket_name
+  custom_response_headers = var.custom_headers
+  enable_cdn              = var.enable_cdn
 }
 
 # ------------------------------------------------------------------------------
