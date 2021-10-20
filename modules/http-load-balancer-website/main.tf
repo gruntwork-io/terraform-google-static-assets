@@ -18,6 +18,7 @@ locals {
   # We have to use dashes instead of dots in the bucket name, because
   # that bucket is not a website
   website_domain_name_dashed = replace(var.website_domain_name, ".", "-")
+  enable_ssl                 = var.create_certificate ? true : var.enable_ssl
 }
 
 module "load_balancer" {
@@ -31,8 +32,8 @@ module "load_balancer" {
   dns_managed_zone_name = var.dns_managed_zone_name
   dns_record_ttl        = var.dns_record_ttl
   enable_http           = var.enable_http
-  enable_ssl            = var.enable_ssl
-  ssl_certificates      = [var.ssl_certificate]
+  enable_ssl            = local.enable_ssl
+  ssl_certificates      = var.create_certificate ? [google_compute_managed_ssl_certificate.certificate[0].id] : [var.ssl_certificate]
   custom_labels         = var.custom_labels
 }
 
@@ -61,6 +62,22 @@ resource "google_compute_backend_bucket" "static" {
   name        = "${local.website_domain_name_dashed}-bucket"
   bucket_name = module.site_bucket.website_bucket_name
   enable_cdn  = var.enable_cdn
+}
+
+# ------------------------------------------------------------------------------
+# CREATE THE SSL CERTIFICATE
+# ------------------------------------------------------------------------------
+
+resource "google_compute_managed_ssl_certificate" "certificate" {
+  provider = google
+  count    = var.create_certificate ? 1 : 0
+
+  project = var.project
+  name    = "cdn-certificate"
+
+  managed {
+    domains = [var.website_domain_name]
+  }
 }
 
 # ------------------------------------------------------------------------------

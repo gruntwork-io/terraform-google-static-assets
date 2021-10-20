@@ -41,6 +41,12 @@ variable "enable_versioning" {
   default     = true
 }
 
+variable "create_certificate" {
+  description = "Set to true to create a SSL certificate managed by Google"
+  type        = bool
+  default     = true
+}
+
 variable "enable_ssl" {
   description = "Set to true to enable ssl. If set to 'true', you will also have to provide 'var.ssl_certificate'."
   type        = bool
