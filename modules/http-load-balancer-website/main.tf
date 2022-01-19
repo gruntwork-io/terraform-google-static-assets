@@ -18,6 +18,7 @@ locals {
   # We have to use dashes instead of dots in the bucket name, because
   # that bucket is not a website
   website_domain_name_dashed = replace(var.website_domain_name, ".", "-")
+  sign_key_output            = var.signed_url_key == "" && var.enable_signed_url ? random_id.url_signature[0].b64_std : var.signed_url_key
 }
 
 module "load_balancer" {
@@ -100,4 +101,21 @@ module "site_bucket" {
   create_dns_entry = false
 
   custom_labels = var.custom_labels
+}
+
+# ------------------------------------------------------------------------------
+# CREATE SIGNED URL KEY
+# ------------------------------------------------------------------------------
+
+resource "random_id" "url_signature" {
+  count       = var.signed_url_key == "" && var.enable_signed_url ? 1 : 0
+  byte_length = 16
+}
+
+resource "google_compute_backend_bucket_signed_url_key" "backend_key" {
+  count          = var.enable_signed_url ? 1 : 0
+  name           = "signing-key"
+  project        = var.project
+  key_value      = var.signed_url_key == "" ? random_id.url_signature[0].b64_url : var.signed_url_key
+  backend_bucket = google_compute_backend_bucket.static.name
 }
