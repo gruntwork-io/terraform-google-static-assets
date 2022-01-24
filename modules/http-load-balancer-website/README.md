@@ -55,3 +55,17 @@ See https://cloud.google.com/storage/docs/encryption/.
 If you are using your Cloud Storage bucket for both the `www.` and root domain of a website (e.g. `www.foo.com` and `foo.com`),
 you can create [Synthetic records](https://support.google.com/domains/answer/6069273?hl=en) with 
 [Subdomain forwarding](https://support.google.com/domains/answer/6072198).
+
+## How do I create signed URLs?
+
+Set variable `enable_signed_urls` to `true`. By default, the module will create a random 16 bytes string to use as key to sign 
+URLs. You can retrieve the key using `terraform output -raw sign_key`. If you want to use your own key, you can set it using 
+variable `signed_url_key`, and the command:
+
+```bash
+head -c 16 /dev/urandom | base64 | tr +/ -_
+```
+
+For security reasons, you have to disable `allUsers` access as ACL, and setup Cloud CDN service account as _Object Viewer_.
+
+[Google Documentation of Signed URLs](https://cloud.google.com/cdn/docs/using-signed-urls).

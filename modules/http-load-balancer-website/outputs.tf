@@ -28,3 +28,8 @@ output "access_logs_bucket_name" {
   value       = module.site_bucket.access_logs_bucket_name
 }
 
+output "sign_key" {
+  description = "Key used to sign URLs"
+  value       = var.enable_signed_url ? local.sign_key_output : null
+  sensitive   = true
+}
