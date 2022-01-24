@@ -167,3 +167,14 @@ variable "custom_labels" {
   default     = {}
 }
 
+variable "signed_url_key" {
+  description = "An string of at least 16 bytes to create the signing key."
+  type        = string
+  default     = ""
+}
+
+variable "enable_signed_url" {
+  description = "Whether to use signed urls."
+  type        = bool
+  default     = false
+}
