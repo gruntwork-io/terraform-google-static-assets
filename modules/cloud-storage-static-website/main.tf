@@ -33,9 +33,10 @@ resource "google_storage_bucket" "website" {
 
   project = var.project
 
-  name          = var.website_domain_name
-  location      = var.website_location
-  storage_class = var.website_storage_class
+  name                        = var.website_domain_name
+  location                    = var.website_location
+  storage_class               = var.website_storage_class
+  uniform_bucket_level_access = var.uniform_bucket_level_access
 
   versioning {
     enabled = var.enable_versioning

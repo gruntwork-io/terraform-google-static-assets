@@ -73,11 +73,12 @@ module "site_bucket" {
 
   project = var.project
 
-  website_domain_name   = local.website_domain_name_dashed
-  website_acls          = var.website_acls
-  website_location      = var.website_location
-  website_storage_class = var.website_storage_class
-  force_destroy_website = var.force_destroy_website
+  website_domain_name         = local.website_domain_name_dashed
+  website_acls                = var.website_acls
+  website_location            = var.website_location
+  website_storage_class       = var.website_storage_class
+  force_destroy_website       = var.force_destroy_website
+  uniform_bucket_level_access = var.uniform_bucket_level_access
 
   index_page     = var.index_page
   not_found_page = var.not_found_page

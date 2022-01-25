@@ -28,8 +28,13 @@ output "access_logs_bucket_name" {
   value       = module.site_bucket.access_logs_bucket_name
 }
 
-output "sign_key" {
+output "sign_key_secret" {
   description = "Key used to sign URLs"
   value       = var.enable_signed_url ? local.sign_key_output : null
   sensitive   = true
+}
+
+output "sign_key_name" {
+  description = "Key used to sign URLs"
+  value       = var.enable_signed_url ? google_compute_backend_bucket_signed_url_key.backend_key[0].name : null
 }

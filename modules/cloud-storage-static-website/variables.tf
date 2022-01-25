@@ -143,3 +143,8 @@ variable "custom_labels" {
   default     = {}
 }
 
+variable "uniform_bucket_level_access" {
+  default     = false
+  description = "Enable uniform bucket level access (default: false)"
+  type        = string
+}
